@@ -1,0 +1,1 @@
+remove python in main init.lua
