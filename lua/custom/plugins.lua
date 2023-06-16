@@ -12,7 +12,7 @@ local plugins = {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
-      -- "hrsh7th/cmp-path",
+      "hrsh7th/cmp-path",
       "hrsh7th/cmp-vsnip",
       "delphinus/cmp-ctags",
       "hrsh7th/cmp-nvim-lsp-document-symbol",
@@ -87,9 +87,11 @@ local plugins = {
     "folke/noice.nvim",
     event = "VeryLazy",
     config = function()
-      require("noice").setup({
-        require "custom.configs.noice"
-      })
+      require("noice").setup({ require "custom.configs.noice" })
+      require("noice").setup({lsp = {
+        signature = { enabled = false },
+        hover = { enabled = false }
+      }})
       require("notify").setup({
         background_colour = "#282A36"
       })
@@ -100,7 +102,7 @@ local plugins = {
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
+     "rcarriga/nvim-notify",
     }
   },
   {
@@ -123,7 +125,7 @@ local plugins = {
     event = "VeryLazy",
   },
   {
-    -- surround chage motion
+    -- git interface 
     "tpope/vim-fugitive",
     event = "VeryLazy",
   },
@@ -132,7 +134,21 @@ local plugins = {
     "mbbill/undotree",
     event = "BufReadPre",
   },
-  -- {
+  {
+    -- move by indentation level
+    "jeetsukumaran/vim-indentwise",
+    event = "VeryLazy",
+  },
+  {
+    -- outline view
+    "preservim/tagbar",
+    event = "VeryLazy",
+  },
+  {
+    -- Change python environment 
+    "AckslD/swenv.nvim",
+    event = "VeryLazy",
+  } -- {
   --   "dccsillag/magma-nvim",
   --   -- event = "BufReadPost",
   --   ft = "json",

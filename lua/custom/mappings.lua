@@ -69,9 +69,12 @@ M.custom = {
     ["<leader>nw"] = { "<cmd> set wrap! <CR>", "toggle wrap" },
     ["<leader>nq"] = { "<cmd> qa! <CR>", "quit all!" },
     ["<leader>wq"] = { "<cmd> wq! <CR>", "write quit!" },
+    ["<leader>ww"] = { "gwip", "rewrap" },
     ["<leader><leader>"] = { ":", "cmdline" },
     -- toggle tree
     ["<C-f>"] = { "<cmd> NvimTreeToggle <CR>", "toggle nvimtree" },
+    ["<F8>"] = { "<cmd> TagbarToggle <CR>", "toggle tagbar" },
+    ["<leader>ns"] = { "<cmd> lua require('swenv.api').pick_venv()<cr>", "Choose Env" },
     -- save quit 
     ["<C-S-q>"] = { "<cmd> qa! <CR>", "quit all!" },
     ["<C-s>"] = { "<cmd> w <CR>", "write" },
@@ -97,10 +100,14 @@ M.custom = {
     ["<C-e>"] = { "<C-w>j", "window down" },
     ["<C-i>"] = { "<C-w>k", "window up" },
     ["<C-I>"] = { "<C-w>k", "window up" },
-    ["<C-o>"] = { "<C-w>l", "window right" },
+    ["<C-Right>"] = { "<C-w>l", "window right" },
+    ["<C-Left>"] = { "<C-w>h", "window left" },
+    ["<C-Down>"] = { "<C-w>j", "window down" },
+    ["<C-Up>"] = { "<C-w>k", "window up" },
     -- git 
     ["<leader>gc"] = { "<cmd> Telescope git_commits <CR>", "git commits" },
     ["<leader>gs"] = { "<cmd> Telescope git_status <CR>", "git status" },
+    ["<leader>gb"] = { "<cmd> Gitsigns toggle_current_line_blame <CR>", "git blame toggle" },
     ["<leader>gr"] = {
       function()
         require("gitsigns").reset_hunk()

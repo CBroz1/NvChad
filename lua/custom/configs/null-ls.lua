@@ -8,7 +8,7 @@ local completion = null_ls.builtins.completion
 
 local sources = {
   formatting.prettier,
-  formatting.black.with({ extra_args = { "--line-length=88" } }),
+  formatting.black.with({ extra_args = { "--line-length=80" } }),
   formatting.isort.with({ extra_args = { "--profile", "black" } }),
   -- formatting.autopep8,
   formatting.markdownlint,
@@ -18,9 +18,8 @@ local sources = {
   -- lint.cspell,
   lint.markdownlint,
   -- lint.pydocstyle,
-  lint.flake8.with({ extra_args = { "--max-line-length=88" } }),
-  lint.pylint.with({ extra_args = { "--max-line-length=88" } }),
-  -- lint.pylint,
+  -- lint.flake8.with({ extra_args = { "--max-line-length=80" } }),
+  -- lint.pylint.with({ extra_args = { "--max-line-length=80" } }),
   -- lint.mypy,
   -- lint.pycodestyle,
 
