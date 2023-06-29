@@ -7,12 +7,12 @@ local lint = null_ls.builtins.diagnostics
 local completion = null_ls.builtins.completion
 
 local sources = {
-  formatting.prettier,
+  -- formatting.prettier,
   formatting.black.with({ extra_args = { "--line-length=80" } }),
   formatting.isort.with({ extra_args = { "--profile", "black" } }),
   -- formatting.autopep8,
   formatting.markdownlint,
-  formatting.prettier,
+  -- formatting.prettier,
 
   lint.shellcheck,
   -- lint.cspell,

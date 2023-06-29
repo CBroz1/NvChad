@@ -1,6 +1,6 @@
 local opt = vim.opt
 
-opt.colorcolumn = "88"
+opt.colorcolumn = "80"
 opt.ruler = true
 opt.autowrite = true
 opt.wildignore = {'*/cache/*', '*/tmp/*', '*.pyc'}

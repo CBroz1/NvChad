@@ -148,6 +148,11 @@ local plugins = {
     -- Change python environment 
     "AckslD/swenv.nvim",
     event = "VeryLazy",
+  },
+  {
+    -- Python folding tools
+    "tmhedberg/SimpylFold",
+    event = "VeryLazy",
   } -- {
   --   "dccsillag/magma-nvim",
   --   -- event = "BufReadPost",
