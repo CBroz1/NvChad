@@ -147,7 +147,15 @@ local plugins = {
   {
     -- Change python environment 
     "AckslD/swenv.nvim",
-    event = "VeryLazy",
+    event = "VeryLazy"
+  },
+  {
+    -- Add jumps to
+    "ggandor/leap.nvim",
+    event = "BufReadPre",
+    config = function()
+      require('leap').add_default_mappings()
+    end,
   },
   {
     -- Python folding tools
