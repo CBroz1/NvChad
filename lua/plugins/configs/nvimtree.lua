@@ -14,6 +14,7 @@ local options = {
       '.gitattributes',
       'MANIFEST.in',
       'CITATION.cff',
+      '.ruff_cache'
     },
   },
   disable_netrw = true,
