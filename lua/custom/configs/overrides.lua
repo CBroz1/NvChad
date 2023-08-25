@@ -12,6 +12,7 @@ M.cmp = {
     -- ["<CR>"] = {}
   },
   sources = {
+    { name = "copilot" },
     { name = "codeium" },
     { name = "cmp_tabnine" },
     { name = "luasnip" , max_item_count = 3},

@@ -161,6 +161,11 @@ local plugins = {
     -- Python folding tools
     "tmhedberg/SimpylFold",
     event = "VeryLazy",
+  },
+  {
+    -- Copilot
+    "github/copilot.vim",
+    event = "BufReadPre",
   } -- {
   --   "dccsillag/magma-nvim",
   --   -- event = "BufReadPost",
