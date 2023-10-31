@@ -17,12 +17,14 @@ opt.swapfile = false
 
 local g = vim.g
 
+vim.cmd([[autocmd FileType text setlocal indentexpr=]]) -- prevent over-indenting
+
 g.mouse = "nv"
 g.lua_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/snippets/python"
 g.vscode_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/snippets/python"
 g.pymode_python = 'python3'
 -- g.loaded_python3_provider = '/home/cb/miniconda3/envs/doa/bin/python'
-g.python3_host_prog = '/home/cb/miniconda3/envs/doa/bin/python'
+g.python3_host_prog = '/home/cb/miniconda3/envs/spy/bin/python'
 -- g.loaded_python3_provider = 1 -- !! nondefault core, remved py L55
 -- print(os.getenv(CONDA_DEFAULT_ENV))
 g.tagbar_sort = 0 -- should probably be in plugins file

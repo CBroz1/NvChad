@@ -7,16 +7,20 @@ local lint = null_ls.builtins.diagnostics
 local completion = null_ls.builtins.completion
 
 local sources = {
-  formatting.prettier,
+  -- formatting.prettier,
   formatting.black,
   formatting.isort.with({ extra_args = { "--profile", "black" } }),
   -- formatting.autopep8,
-  formatting.markdownlint,
+  formatting.markdownlint.with({
+    extra_args = { "--config", vim.fn.expand("~/.config/.markdownlint.yaml") },
+  }),
   -- formatting.prettier,
 
   lint.shellcheck,
   -- lint.cspell,
-  lint.markdownlint,
+  lint.markdownlint.with({
+    extra_args = { "--config", vim.fn.expand("~/.config/.markdownlint.yaml") },
+  }),
   -- lint.pydocstyle,
   -- lint.flake8.with({ extra_args = { "--max-line-length=80" } }),
   -- lint.pylint.with({ extra_args = { "--max-line-length=80" } }),
