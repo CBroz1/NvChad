@@ -1,12 +1,9 @@
 local opt = vim.opt
 local g = vim.g
-local config = require("core.utils").load_config()
 
 -------------------------------------- globals -----------------------------------------
-g.nvchad_theme = config.ui.theme
 g.base46_cache = vim.fn.stdpath "data" .. "/nvchad/base46/"
 g.toggle_theme_icon = "   "
-g.transparency = config.ui.transparency
 
 -------------------------------------- options ------------------------------------------
 opt.laststatus = 3 -- global statusline
@@ -14,6 +11,7 @@ opt.showmode = false
 
 opt.clipboard = "unnamedplus"
 opt.cursorline = true
+opt.cursorlineopt = 'number'
 
 -- Indenting
 opt.expandtab = true
@@ -58,7 +56,7 @@ end
 
 -- add binaries installed by mason.nvim to path
 local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
-vim.env.PATH = vim.env.PATH .. (is_windows and ";" or ":") .. vim.fn.stdpath "data" .. "/mason/bin"
+vim.env.PATH = vim.fn.stdpath "data" .. "/mason/bin" .. (is_windows and ";" or ":") .. vim.env.PATH
 
 -------------------------------------- autocmds ------------------------------------------
 local autocmd = vim.api.nvim_create_autocmd
@@ -72,11 +70,10 @@ autocmd("FileType", {
 })
 
 -- reload some chadrc options on-save
-vim.api.nvim_create_autocmd("BufWritePost", {
-  pattern = vim.tbl_map(
-    vim.fs.normalize,
-    vim.fn.glob(vim.fn.stdpath "config" .. "/lua/custom/**/*.lua", true, true, true)
-  ),
+autocmd("BufWritePost", {
+  pattern = vim.tbl_map(function(path)
+    return vim.fs.normalize(vim.loop.fs_realpath(path))
+  end, vim.fn.glob(vim.fn.stdpath "config" .. "/lua/custom/**/*.lua", true, true, true)),
   group = vim.api.nvim_create_augroup("ReloadNvChad", {}),
 
   callback = function(opts)
@@ -84,18 +81,23 @@ vim.api.nvim_create_autocmd("BufWritePost", {
     local app_name = vim.env.NVIM_APPNAME and vim.env.NVIM_APPNAME or "nvim"
     local module = string.gsub(fp, "^.*/" .. app_name .. "/lua/", ""):gsub("/", ".")
 
+    require("plenary.reload").reload_module "nvconfig"
     require("plenary.reload").reload_module "base46"
     require("plenary.reload").reload_module(module)
-    require("plenary.reload").reload_module "custom.chadrc"
 
-    config = require("core.utils").load_config()
-
-    vim.g.nvchad_theme = config.ui.theme
-    vim.g.transparency = config.ui.transparency
+    local config = require "nvconfig"
 
     -- statusline
-    require("plenary.reload").reload_module("nvchad_ui.statusline." .. config.ui.statusline.theme)
-    vim.opt.statusline = "%!v:lua.require('nvchad_ui.statusline." .. config.ui.statusline.theme .. "').run()"
+    if config.ui.statusline.theme ~= "custom" then
+      require("plenary.reload").reload_module("nvchad.statusline." .. config.ui.statusline.theme)
+      vim.opt.statusline = "%!v:lua.require('nvchad.statusline." .. config.ui.statusline.theme .. "').run()"
+    end
+
+    -- tabufline
+    if config.ui.tabufline.enabled then
+      require("plenary.reload").reload_module "nvchad.tabufline.modules"
+      vim.opt.tabline = "%!v:lua.require('nvchad.tabufline.modules').run()"
+    end
 
     require("base46").load_all_highlights()
     -- vim.cmd("redraw!")
@@ -106,5 +108,5 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 local new_cmd = vim.api.nvim_create_user_command
 
 new_cmd("NvChadUpdate", function()
-  require "nvchad.update"()
+  require "nvchad.updater"()
 end, {})

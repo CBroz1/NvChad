@@ -16,7 +16,7 @@ M.general = {
   },
 
   n = {
-    ["<Esc>"] = { ":noh <CR>", "Clear highlights" },
+    ["<Esc>"] = { "<cmd> noh <CR>", "Clear highlights" },
     -- switch between windows
     ["<C-h>"] = { "<C-w>h", "Window left" },
     ["<C-l>"] = { "<C-w>l", "Window right" },
@@ -45,6 +45,13 @@ M.general = {
     -- new buffer
     ["<leader>b"] = { "<cmd> enew <CR>", "New buffer" },
     ["<leader>ch"] = { "<cmd> NvCheatsheet <CR>", "Mapping cheatsheet" },
+
+    ["<leader>fm"] = {
+      function()
+        vim.lsp.buf.format { async = true }
+      end,
+      "LSP formatting",
+    },
   },
 
   t = {
@@ -54,6 +61,8 @@ M.general = {
   v = {
     ["<Up>"] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', "Move up", opts = { expr = true } },
     ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
+    ["<"] = { "<gv", "Indent line" },
+    [">"] = { ">gv", "Indent line" },
   },
 
   x = {
@@ -72,14 +81,14 @@ M.tabufline = {
     -- cycle through buffers
     ["<tab>"] = {
       function()
-        require("nvchad_ui.tabufline").tabuflineNext()
+        require("nvchad.tabufline").tabuflineNext()
       end,
       "Goto next buffer",
     },
 
     ["<S-tab>"] = {
       function()
-        require("nvchad_ui.tabufline").tabuflinePrev()
+        require("nvchad.tabufline").tabuflinePrev()
       end,
       "Goto prev buffer",
     },
@@ -87,7 +96,7 @@ M.tabufline = {
     -- close buffer + hide terminal buffer
     ["<leader>x"] = {
       function()
-        require("nvchad_ui.tabufline").close_buffer()
+        require("nvchad.tabufline").close_buffer()
       end,
       "Close buffer",
     },
@@ -165,7 +174,7 @@ M.lspconfig = {
 
     ["<leader>ra"] = {
       function()
-        require("nvchad_ui.renamer").open()
+        require("nvchad.renamer").open()
       end,
       "LSP rename",
     },
@@ -184,7 +193,7 @@ M.lspconfig = {
       "LSP references",
     },
 
-    ["<leader>f"] = {
+    ["<leader>lf"] = {
       function()
         vim.diagnostic.open_float { border = "rounded" }
       end,
@@ -193,14 +202,14 @@ M.lspconfig = {
 
     ["[d"] = {
       function()
-        vim.diagnostic.goto_prev({ float = { border = "rounded" }})
+        vim.diagnostic.goto_prev { float = { border = "rounded" } }
       end,
       "Goto prev",
     },
 
     ["]d"] = {
       function()
-        vim.diagnostic.goto_next({ float = { border = "rounded" }})
+        vim.diagnostic.goto_next { float = { border = "rounded" } }
       end,
       "Goto next",
     },
@@ -210,13 +219,6 @@ M.lspconfig = {
         vim.diagnostic.setloclist()
       end,
       "Diagnostic setloclist",
-    },
-
-    ["<leader>fm"] = {
-      function()
-        vim.lsp.buf.format { async = true }
-      end,
-      "LSP formatting",
     },
 
     ["<leader>wa"] = {
@@ -238,6 +240,15 @@ M.lspconfig = {
         print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
       end,
       "List workspace folders",
+    },
+  },
+
+  v = {
+    ["<leader>ca"] = {
+      function()
+        vim.lsp.buf.code_action()
+      end,
+      "LSP code action",
     },
   },
 }
@@ -281,69 +292,75 @@ M.telescope = {
   },
 }
 
-M.nvterm = {
-  plugin = true,
-
-  t = {
-    -- toggle in terminal mode
-    ["<A-i>"] = {
-      function()
-        require("nvterm.terminal").toggle "float"
-      end,
-      "Toggle floating term",
-    },
-
-    ["<A-h>"] = {
-      function()
-        require("nvterm.terminal").toggle "horizontal"
-      end,
-      "Toggle horizontal term",
-    },
-
-    ["<A-v>"] = {
-      function()
-        require("nvterm.terminal").toggle "vertical"
-      end,
-      "Toggle vertical term",
-    },
-  },
-
+M.terminal = {
   n = {
-    -- toggle in normal mode
-    ["<A-i>"] = {
-      function()
-        require("nvterm.terminal").toggle "float"
-      end,
-      "Toggle floating term",
-    },
-
-    ["<A-h>"] = {
-      function()
-        require("nvterm.terminal").toggle "horizontal"
-      end,
-      "Toggle horizontal term",
-    },
-
-    ["<A-v>"] = {
-      function()
-        require("nvterm.terminal").toggle "vertical"
-      end,
-      "Toggle vertical term",
-    },
-
-    -- new
+    -- spawn new terms
     ["<leader>h"] = {
       function()
-        require("nvterm.terminal").new "horizontal"
+        require("nvchad.term").new { pos = "sp", size = 0.3 }
       end,
       "New horizontal term",
     },
 
     ["<leader>v"] = {
       function()
-        require("nvterm.terminal").new "vertical"
+        require("nvchad.term").new { pos = "vsp", size = 0.3 }
       end,
       "New vertical term",
+    },
+
+    -- toggle terms
+    ["<A-v>"] = {
+      function()
+        require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm", size = 0.3 }
+      end,
+      "New vertical term",
+    },
+
+    ["<A-h>"] = {
+      function()
+        require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm", size = 0.2 }
+      end,
+      "New vertical term",
+    },
+
+    ["<A-i>"] = {
+      function()
+        require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+      end,
+      "Toggleable Floating term",
+    },
+  },
+
+  -- toggle terms in terminal mode
+  t = {
+    ["<ESC>"] = {
+      function()
+        local win = vim.api.nvim_get_current_win()
+        vim.api.nvim_win_close(win, true)
+      end,
+      "close term in terminal mode",
+    },
+
+    ["<A-v>"] = {
+      function()
+        require("nvchad.term").toggle { pos = "vsp", id = "vtoggleTerm" }
+      end,
+      "New vertical term",
+    },
+
+    ["<A-h>"] = {
+      function()
+        require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
+      end,
+      "New vertical term",
+    },
+
+    ["<A-i>"] = {
+      function()
+        require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+      end,
+      "Toggleable Floating term",
     },
   },
 }
