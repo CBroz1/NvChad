@@ -102,7 +102,7 @@ local plugins = {
       -- OPTIONAL:
       --   `nvim-notify` is only needed, if you want to use the notification view.
       --   If not available, we use `mini` as the fallback
-     "rcarriga/nvim-notify",
+     -- "rcarriga/nvim-notify",
     }
   },
   {
@@ -124,16 +124,16 @@ local plugins = {
     "tpope/vim-surround",
     event = "VeryLazy",
   },
-  {
-    -- git interface 
-    "tpope/vim-fugitive",
-    event = "VeryLazy",
-  },
-  {
-    -- Undo tree
-    "mbbill/undotree",
-    event = "BufReadPre",
-  },
+  -- {
+  --   -- git interface 
+  --   "tpope/vim-fugitive",
+  --   event = "VeryLazy",
+  -- },
+  -- {
+  --   -- Undo tree
+  --   "mbbill/undotree",
+  --   event = "BufReadPre",
+  -- },
   {
     -- move by indentation level
     "jeetsukumaran/vim-indentwise",

@@ -13,7 +13,7 @@ M.cmp = {
   },
   sources = {
     { name = "copilot" },
-    { name = "codeium" },
+    { name = "codeium", max_item_count = 3},
     { name = "cmp_tabnine" },
     { name = "luasnip" , max_item_count = 3},
     { name = "buffer", keyword_length = 3, max_item_count = 3},

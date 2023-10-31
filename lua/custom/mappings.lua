@@ -105,9 +105,9 @@ M.custom = {
     ["<C-Down>"] = { "<C-w>j", "window down" },
     ["<C-Up>"] = { "<C-w>k", "window up" },
     -- git 
-    ["<leader>gc"] = { "<cmd> Telescope git_commits <CR>", "git commits" },
+    ["<leader>gl"] = { "<cmd> Telescope git_commits <CR>", "git commits" },
     ["<leader>gs"] = { "<cmd> Telescope git_status <CR>", "git status" },
-    ["<leader>gb"] = { "<cmd> Gitsigns toggle_current_line_blame <CR>", "git blame toggle" },
+    ["<leader>gw"] = { "<cmd> Gitsigns toggle_current_line_blame <CR>", "git blame toggle" },
     ["<leader>gr"] = {
       function()
         require("gitsigns").reset_hunk()
