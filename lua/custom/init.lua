@@ -17,7 +17,11 @@ opt.swapfile = false
 
 local g = vim.g
 
-vim.cmd([[autocmd FileType text setlocal indentexpr=]]) -- prevent over-indenting
+vim.cmd([[autocmd FileType text setlocal indentexpr=indent]])
+
+-- Move first word after dash to end of line
+vim.api.nvim_set_keymap('x', '<leader>m', [[:s/\v - (\s*.\S*)(.*)$/ -\2 (\1)/<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>m', [[:s/\v - (\s*.\S*)(.*)$/ -\2 (\1)/<CR>]], { noremap = true, silent = true })
 
 g.mouse = "nv"
 g.lua_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/snippets/python"

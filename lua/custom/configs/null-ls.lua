@@ -9,6 +9,9 @@ local completion = null_ls.builtins.completion
 local sources = {
   -- formatting.prettier,
   formatting.black,
+  -- .with({ 
+  --   extra_args = { "--config", vim.fn.expand("~/.config/black") } 
+  -- }),
   formatting.isort.with({ extra_args = { "--profile", "black" } }),
   -- formatting.autopep8,
   formatting.markdownlint.with({
@@ -23,7 +26,11 @@ local sources = {
   }),
   -- lint.pydocstyle,
   -- lint.flake8.with({ extra_args = { "--max-line-length=80" } }),
-  -- lint.pylint.with({ extra_args = { "--max-line-length=80" } }),
+  -- lint.pylint.with({ extra_args = { 
+  --   "--max-line-length=80",  
+  --   "--load-plugins=datajoint_linter",
+  --   "--disable=missing-docstring,invalid-name,import-error,too-many-arguments,too-many-locals,too-many-branches,too-many-statements,too-many-instance-attributes,too-many-public-methods,too-few-public-methods,too-many-lines,too-many-function-args,too-many-nested-blocks,too-many-return-statements,too-many-boolean-expressions,too-many-ancestors,too-many-boolean-expressions,too-many-arguments,too-many-locals,too-many-branches,too-many-statements,too-many-instance-attributes,too-many-public-methods,too-few-public-methods,too-many-lines,too-many-function-args,too-many-nested-blocks,too-many-return-statements,too-many-boolean-expressions,too-many-ancestors,too-many-boolean-expressions,too-many-arguments,too-many-locals,too-many-branches,too-many-statements,too-many-instance-attributes,too-many-public-methods,too-few-public-methods,too-many-lines,too-many-function-args,too-many-nested-blocks,too-many-return-statements,too-many-boolean-expressions,too-many-ancestors"
+  -- } }),
   -- lint.mypy,
   -- lint.pycodestyle,
 

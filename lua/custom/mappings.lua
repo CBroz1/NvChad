@@ -1,11 +1,11 @@
 local M = {}
 
+-- vim.cmd([[
+--   command! -range -nargs=0 MoveUnits <line1>,<line2>s/\v - (\s*\w+\S*)(.*)$/ - \2 (\1)/
+-- ]])
+
 M.disabled = {
   i = {
-    -- ["<C-n>"] = "",
-    -- ["<C-e>"] = "",
-    -- ["<C-i>"] = "",
-    -- ["<C-o>"] = "",
     ["<C-s>"] = "",
   },
 
@@ -15,14 +15,6 @@ M.disabled = {
     ["<C-f>"] = "",
     ["<C-q>"] = "",
     ["<C-p>"] = "",
-    -- ["k"] = "",
-    -- ["K"] = "",
-    -- ["m"] = "",
-    -- ["M"] = "" ,
-    -- ["n"] = "",
-    -- ["e"] = "",
-    -- ["i"] = "",
-    -- ["o"] = "",
     ["<C-n>"] = "",
     ["<C-e>"] = "",
     ["<C-i>"] = "",
@@ -33,22 +25,38 @@ M.disabled = {
     ["<leader>rh"] = "",
     ["<leader>ph"] = "",
     ["<leader>gb"] = "",
-    ["<leader>td"] = ""
+    ["<leader>td"] = "",
+    -- Harpoon -- ["C-`"] = "",
+    ["<leader>h"] = "",
+    ["<leader>fp"] = "",
+    ["<leader>a"] = "", 
+    ["<leader>1"] = "", 
+    ["<leader>2"] = "", 
+    ["<leader>3"] = "", 
+    -- git worktree, tele cmd hist
+    ["<leader>ft"] = "",
+    ["<leader>fc"] = "",
   },
   v = {
-    -- ["n"] = "",
-    -- ["e"] = "",
-    -- ["i"] = "",
-    -- ["o"] = "",
+    ["<C-c>"] = "",
+    ["<leader>m"] = "",
+    ["<leader>t"] = "",
+    ["<leader>d"] = "",
+    ["<leader>s"] = "",
+    ["<leader>w"] = "",
+  }, 
+  x = { 
+    ["<C-c>"] = "",
+    ["<leader>m"] = "",
+    ["<leader>t"] = "",
+    ["<leader>d"] = "",
+    ["<leader>s"] = "",
+    ["<leader>w"] = "",
   }
 }
 
 M.custom = {
   i = {
-    -- ["<C-n>"] = { "<Left>", "move left" },
-    -- ["<C-e>"] = { "<Down>", "move down" },
-    -- ["<C-i>"] = { "<Up>", "move up" },
-    -- ["<C-o>"] = { "<Right>", "move right" },
     ["<C-s>"] = { "<ESC><cmd> w <CR>", "write" },
     ["<C-w>"] = { "<ESC><cmd> wq <CR>", "write/quit" },
     ["<C-S-q>"] = { "<ESC><cmd> qa! <CR>", "quit all!" },
@@ -59,8 +67,7 @@ M.custom = {
 
   n = {
     -- Line nums, notif, wrap
-    ["<leader>nl"] = { "<cmd> set nu! <CR>", "toggle line number" },
-    ["<leader>nr"] = { "<cmd> set rnu! <CR>", "toggle relative number" },
+    ["<leader>nl"] = { "<cmd> set nu! <CR> <cmd> set rnu! <CR>", "toggle all line number" },
     ["<leader>nn"] = { "<cmd> Notifications <CR>", "notifications" },
     ["<leader>nm"] = {
       "<cmd> lua require('telescope').extensions.notify.notify() <CR>",
@@ -81,20 +88,6 @@ M.custom = {
     ["<C-q>"] = { "<cmd> wq! <CR>", "write quit!" },
     -- telescope
     ["<C-p>"] = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>", "find all" },
-    -- -- move defaults for hjkl
-    -- ["k"] = {"n","repeat search fwd", opts = { } },
-    -- ["K"] = {"N","repeat search bck", opts = { } },
-    -- ["m"] = {"i","insert -> modify", opts = { } },
-    -- ["M"] = {"I","from begin line", opts = { } },
-    -- ["j"] = {"e","jump word end", opts = { } },
-    -- ["J"] = {"E","jump word end", opts = { } },
-    -- ["h"] = {"o","new line below", opts = { } },
-    -- ["H"] = {"O","new line above", opts = { } },
-    -- -- navigate within normal mode
-    -- ["n"] = {"<Left>","move left", opts = {} },
-    -- ["e"] = {"<Down>","move down", opts = {} },
-    -- ["i"] = {"<Up>","move up", opts = {} },
-    -- ["o"] = {"<Right>","move right", opts = {} },
     -- switch between windows
     ["<C-n>"] = { "<C-w>h", "window left" },
     ["<C-e>"] = { "<C-w>j", "window down" },
@@ -139,24 +132,35 @@ M.custom = {
     ["<C-u>"] = { "<C-u>zz", "PgUp keep center" },
     ["<ScrollWheelDown>"] = { "<C-d>zz", "PgDn keep center" },
     ["<ScrollWheelUp>"] = { "<C-u>zz", "PgUp keep center" },
-    -- magma-nvim notebooks 
-    -- ["<leader>r"] = { "<cmd> MagmaEvaluateOperator<CR>","Start magma", opts = { silent = true } },
-    -- ["<Leader>rr"] = { "<cmd> MagmaEvaluateLine<CR>", opts = { silent = true } },
-    -- ["<Leader>rc"] = { "<cmd> MagmaReevaluateCell<CR>", opts = { silent = true } },
-    -- ["<Leader>rd"] = { "<cmd> MagmaDelete<CR>", opts = { silent = true } },
-    -- ["<Leader>ro"] = { "<cmd> MagmaShowOutput<CR>", opts = { silent = true } },
-    -- ["<Leader>rq"] = { "<cmd> MagmaEnterOutput<CR>", opts = { silent = true } },
+    -- Harpoon 
+    -- ["C-`"] = {"<cmd> lua require('harpoon.tmux').gotoTerminal('{last}') <CR>", "Harp ToTerm"}, 
+    ["<leader>a"] = {"<cmd> lua require('harpoon.mark').add_file() <CR>", "Harp Add"}, 
+    ["<leader>h"] = {"<cmd> lua require('harpoon.ui').toggle_quick_menu() <CR>", "Harp Menu"}, 
+    ["<leader>fp"]={"<cmd> Telescope harpoon marks <CR>", "Harp Menu"}, 
+    ["<leader>1"] = {"<cmd> lua require('harpoon.ui').nav_file(1) <CR>", "Harp 1"}, 
+    ["<leader>2"] = {"<cmd> lua require('harpoon.ui').nav_file(2) <CR>", "Harp 2"}, 
+    ["<leader>3"] = {"<cmd> lua require('harpoon.ui').nav_file(3) <CR>", "Harp 3"},
+    -- git worktree
+    ["<leader>ft"] = {"<cmd> lua require('telescope').extensions.git_worktree.git_worktrees() <CR>", "Git Worktree"},
+    ["<leader>fc"] = {"<cmd> Telescope command_history <CR>", "command history"},
   },
 
   v = {
-    -- -- insert -> modify
-    -- ["m"] = {"i","insert -> modify", opts = { } },
-    -- ["M"] = {"I","from begin line", opts = { } },
-    -- ["n"] = {"<Left>","move left", opts = {} },
-    -- ["e"] = {"<Down>","move down", opts = {} },
-    -- ["i"] = {"<Up>","move up", opts = {} },
-    -- ["o"] = {"<Right>","move right", opts = {} },
+    -- ["<leader>m"] = {"<cmd>MoveUnits<CR>", "Last word parens"}, -- Managed elsewhere
+    ["<C-c>"] = {"<cmd> '<,'>w !xclip -selection clipboard <CR>", "Copy system clipboard"},
+    ["<leader>t"] = {"<cmd>'<,'>s/\\<.\\u&/g <CR>", "Set title case"},
+    ["<leader>d"] = {[[<cmd>'<,'>s/\n/\r\r/g<CR>]], "Double space"},
+    ["<leader>s"] = {[[<cmd>'<,'>s/\n\n/\r/g<CR>]], "Single space"},
+    ["<leader>w"] = {"<cmd>norm! gwip<CR>", "Rewrap"},
   },
+  x = { 
+    -- ["<leader>m"] = {"<cmd>MoveUnits<CR>", "Last word parens"}, -- Managed elsewhere
+    ["<C-c>"] = {"<cmd> '<,'>w !xclip -selection clipboard <CR>", "Copy system clipboard"},
+    ["<leader>t"] = {"<cmd> '<,'>s/\\<.\\u&/g <CR>", "Set title case"},
+    ["<leader>d"] = {[[<cmd>'<,'>s/\n/\r\r/g<CR>]], "Double space"},
+    ["<leader>s"] = {[[<cmd>'<,'>s/\n\n/\r/g<CR>]], "Single space"},
+    ["<leader>w"] = {"<cmd>norm! gwip<CR>", "Rewrap"},
+  }
 
 }
 
