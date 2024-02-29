@@ -68,6 +68,8 @@ M.custom = {
   n = {
     -- Line nums, notif, wrap
     ["<leader>nl"] = { "<cmd> set nu! <CR> <cmd> set rnu! <CR>", "toggle all line number" },
+    ["<leader>nj"] = { "<cmd> set rnu! <CR>", "toggle relative line" },
+    ["<leader>nk"] = { "<cmd> set nu! <CR>", "toggle line number" },
     ["<leader>nn"] = { "<cmd> Notifications <CR>", "notifications" },
     ["<leader>nm"] = {
       "<cmd> lua require('telescope').extensions.notify.notify() <CR>",
