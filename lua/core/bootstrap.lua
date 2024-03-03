@@ -32,15 +32,23 @@ M.lazy = function(install_path)
   -- install plugins
   require "plugins"
 
-  -- mason packages & show post_boostrap screen
-  require "nvchad.post_install"()
+  -- mason packages & show post_bootstrap screen
+  vim.cmd "MasonInstallAll"
+  local lastpkg = vim.g.mason_binaries_list[#vim.g.mason_binaries_list]
+
+  -- Keep track of which mason pkgs get installed
+  require("mason-registry"):on("package:install:success", function(pkg)
+    if tostring(pkg) == "Package(name=" .. lastpkg .. ")" then
+      print "All done! Now read nvchad.com "
+    end
+  end)
 end
 
 M.gen_chadrc_template = function()
   local path = fn.stdpath "config" .. "/lua/custom"
 
   if fn.isdirectory(path) ~= 1 then
-    local input = fn.input "Do you want to install example custom config? (y/N): "
+    local input = vim.env.NVCHAD_EXAMPLE_CONFIG or fn.input "Do you want to install example custom config? (y/N): "
 
     if input:lower() == "y" then
       M.echo "Cloning example custom config repo..."

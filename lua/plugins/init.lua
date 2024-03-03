@@ -23,9 +23,7 @@ local default_plugins = {
 
   {
     "NvChad/nvim-colorizer.lua",
-    init = function()
-      require("core.utils").lazy_load "nvim-colorizer.lua"
-    end,
+    event = "User FilePost",
     config = function(_, opts)
       require("colorizer").setup(opts)
 
@@ -49,14 +47,12 @@ local default_plugins = {
 
   {
     "lukas-reineke/indent-blankline.nvim",
-    init = function()
-      require("core.utils").lazy_load "indent-blankline.nvim"
-    end,
-    opts = function()
-      return require("plugins.configs.others").blankline
-    end,
+    event = "User FilePost",
+    opts = {
+      indent = { char = "│", highlight = "IblChar" },
+      scope = { char = "│", highlight = "IblScopeChar" },
+    },
     config = function(_, opts)
-      require("core.utils").load_mappings "blankline"
       dofile(vim.g.base46_cache .. "blankline")
 
       local hooks = require "ibl.hooks"
@@ -67,9 +63,7 @@ local default_plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    init = function()
-      require("core.utils").lazy_load "nvim-treesitter"
-    end,
+    event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
@@ -85,24 +79,9 @@ local default_plugins = {
   -- git stuff
   {
     "lewis6991/gitsigns.nvim",
-    ft = { "gitcommit", "diff" },
-    init = function()
-      -- load gitsigns only when a git file is opened
-      vim.api.nvim_create_autocmd({ "BufRead" }, {
-        group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
-        callback = function()
-          vim.fn.system("git -C " .. '"' .. vim.fn.expand "%:p:h" .. '"' .. " rev-parse")
-          if vim.v.shell_error == 0 then
-            vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
-            vim.schedule(function()
-              require("lazy").load { plugins = { "gitsigns.nvim" } }
-            end)
-          end
-        end,
-      })
-    end,
+    event = "User FilePost",
     opts = function()
-      return require("plugins.configs.others").gitsigns
+      return require "plugins.configs.gitsigns"
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "git")
@@ -123,7 +102,9 @@ local default_plugins = {
 
       -- custom nvchad cmd to install all mason binaries listed
       vim.api.nvim_create_user_command("MasonInstallAll", function()
-        vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
+        if opts.ensure_installed and #opts.ensure_installed > 0 then
+          vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
+        end
       end, {})
 
       vim.g.mason_binaries_list = opts.ensure_installed
@@ -132,9 +113,7 @@ local default_plugins = {
 
   {
     "neovim/nvim-lspconfig",
-    init = function()
-      require("core.utils").lazy_load "nvim-lspconfig"
-    end,
+    event = "User FilePost",
     config = function()
       require("plugins.configs.lspconfig").defaults()
     end,
@@ -151,7 +130,8 @@ local default_plugins = {
         dependencies = "rafamadriz/friendly-snippets",
         opts = { history = true, updateevents = "TextChanged,TextChangedI" },
         config = function(_, opts)
-          require("plugins.configs.others").luasnip(opts)
+          require("luasnip").config.set_config(opts)
+          require "plugins.configs.luasnip"
         end,
       },
 
@@ -199,7 +179,7 @@ local default_plugins = {
       { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
     },
     init = function()
-      require("core.utils").load_mappings "comment"
+      vim.g.comment_maps = true
     end,
     config = function(_, opts)
       require("Comment").setup(opts)
@@ -210,9 +190,6 @@ local default_plugins = {
   {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    init = function()
-      require("core.utils").load_mappings "nvimtree"
-    end,
     opts = function()
       return require "plugins.configs.nvimtree"
     end,
@@ -224,11 +201,8 @@ local default_plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     cmd = "Telescope",
-    init = function()
-      require("core.utils").load_mappings "telescope"
-    end,
     opts = function()
       return require "plugins.configs.telescope"
     end,
@@ -248,9 +222,6 @@ local default_plugins = {
   {
     "folke/which-key.nvim",
     keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
-    init = function()
-      require("core.utils").load_mappings "whichkey"
-    end,
     cmd = "WhichKey",
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "whichkey")
