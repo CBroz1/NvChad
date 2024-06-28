@@ -59,7 +59,7 @@ map(
 )
 
 -- nvimtree
-map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "Nvimtree Toggle window" })
+-- map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "Nvimtree Toggle window" })
 map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "Nvimtree Focus window" })
 
 -- telescope
@@ -84,9 +84,9 @@ map(
 -- terminal
 map("t", "<C-x>", "<C-\\><C-N>", { desc = "Terminal Escape terminal mode" })
 
-map("n", "<leader>h", function()
-  require("nvchad.term").new { pos = "sp", size = 0.3 }
-end, { desc = "Terminal New horizontal term" })
+-- map("n", "<leader>h", function()
+--   require("nvchad.term").new { pos = "sp", size = 0.3 }
+-- end, { desc = "Terminal New horizontal term" })
 
 map("n", "<leader>v", function()
   require("nvchad.term").new { pos = "vsp", size = 0.3 }

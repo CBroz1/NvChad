@@ -33,3 +33,4 @@ g.python3_host_prog = '/home/cb/miniconda3/envs/spy/bin/python'
 -- print(os.getenv(CONDA_DEFAULT_ENV))
 g.tagbar_sort = 0 -- should probably be in plugins file
 
+vim.cmd([[ source ~/.config/nvim/lua/custom/init.vim ]])

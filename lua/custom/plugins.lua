@@ -37,7 +37,7 @@ local plugins = {
         -- defaults
         "vim",
         "lua",
-        "bash",
+        -- "bash",
         "python",
         "regex",
         "markdown",
@@ -79,6 +79,7 @@ local plugins = {
   },
   {
     "folke/noice.nvim",
+    enabled = true,
     event = "VeryLazy",
     config = function()
       require("noice").setup({ require "custom.configs.noice" })
@@ -206,6 +207,19 @@ local plugins = {
     config = function() 
       require("nvim-toc").setup({})
     end
+  },
+  { "cespare/vim-toml" 
+  -- }, 
+  -- {
+  --   "lervag/vimtex",
+  --   enable=false,
+  --   event = "VeryLazy",
+  --   -- lazy = false,     -- we don't want to lazy load VimTeX
+  --   -- tag = "v2.15", -- uncomment to pin to a specific release
+  --   init = function()
+  --     -- VimTeX configuration goes here, e.g.
+  --     vim.g.vimtex_view_method = "zathura"
+  --   end
   }
 }
 

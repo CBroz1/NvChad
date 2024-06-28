@@ -21,7 +21,7 @@ map("i", "<C-u>",  "<C-u>zz", { desc = "PgUp keep center" })
 -- Command
 map("n", "<leader><leader>", ":", { desc = "cmdline" })
 -- Navigation
-map("n", "<C-n>", "<C-w>h", { desc = "Switch Window left" })
+map("n", "<C-n>", "<C-w>h", { desc = "Switch Window left" }) -- REQ TURN OFF in core/mappings.lua
 map("n", "<C-e>", "<C-w>j", { desc = "Switch Window down" })
 map("n", "<C-i>", "<C-w>k", { desc = "Switch Window up" })
 map("n", "<C-o>", "<C-w>l", { desc = "Switch Window right" })
@@ -33,6 +33,8 @@ map("n", "<C-d>", "<C-d>zz", { desc = "PgDn keep center" })
 map("n", "<C-u>", "<C-u>zz", { desc = "PgUp keep center" })
 map("n", "<ScrollWheelDown>", "<C-d>zz", { desc = "PgDn keep center" })
 map("n", "<ScrollWheelUp>", "<C-u>zz", { desc = "PgUp keep center" })
+map("n", "<leader>ne", "<cmd> :cprev <CR>", { desc = "prev quicklist" })
+map("n", "<leader>ni", "<cmd> :cnext <CR>", { desc = "next quicklist" })
 -- F prefix
 map("n", "<leader>fc","<cmd> Telescope command_history <CR>", { desc = "command history"})
 map("n", "<leader>fp", "<cmd> Telescope harpoon marks <CR>", { desc = "Harp Menu"})
@@ -60,7 +62,7 @@ map("n", "<C-s>", "<cmd> w <CR>", { desc = "write" })
 map("n", "<C-q>", "<cmd> wq! <CR>", { desc = "write quit!" })
 -- Harpoon
 map("n", "<leader>a", "<cmd> lua require('harpoon.mark').add_file() <CR>", { desc = "Harp Add"})
-map("n", "<leader>h", "<cmd> lua require('harpoon.ui').toggle_quick_menu() <CR>", { desc = "Harp Menu"})
+map("n", "<leader>h", "<cmd> lua require('harpoon.ui').toggle_quick_menu() <CR>", { desc = "Harp Menu"}) -- REQ TURN OFF in core/mappings.lua
 map("n", "<leader>1", "<cmd> lua require('harpoon.ui').nav_file(1) <CR>", { desc = "Harp 1"})
 map("n", "<leader>2", "<cmd> lua require('harpoon.ui').nav_file(2) <CR>", { desc = "Harp 2"})
 map("n", "<leader>3", "<cmd> lua require('harpoon.ui').nav_file(3) <CR>", { desc = "Harp 3"})

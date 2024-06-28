@@ -8,10 +8,9 @@ local completion = null_ls.builtins.completion
 
 local sources = {
   -- formatting.prettier,
-  formatting.black,
-  -- .with({ 
-  --   extra_args = { "--config", vim.fn.expand("~/.config/black") } 
-  -- }),
+  formatting.black.with({ 
+    extra_args = { "--config", vim.fn.expand("~/.config/black") } 
+  }),
   formatting.isort.with({ extra_args = { "--profile", "black" } }),
   -- formatting.autopep8,
   formatting.markdownlint.with({
@@ -20,7 +19,7 @@ local sources = {
   -- formatting.prettier,
 
   lint.shellcheck,
-  -- lint.cspell,
+  lint.cspell.with({ extra_args = { "--config", vim.fn.expand("~/.config/.cspell.json") } }),
   lint.markdownlint.with({
     extra_args = { "--config", vim.fn.expand("~/.config/.markdownlint.yaml") },
   }),
