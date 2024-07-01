@@ -1,0 +1,2 @@
+remove python in main init.lua
+Add to lua.plugint.config.nvimtree.filters : custom = {'_.git', '__pycache__'},
